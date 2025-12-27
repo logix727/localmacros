@@ -1,4 +1,4 @@
-import { getUnsyncedLogs, markAsSynced } from './db';
+import { getUnsyncedLogs, markAsSynced } from '@/lib/db';
 
 // MOCK STUB due to installation environment error
 // To enable real Health Connect, install '@capacitor-community/health-connect' and uncomment the import above.
