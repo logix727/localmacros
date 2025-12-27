@@ -1,13 +1,17 @@
+import { z } from 'zod';
 
-export interface FoodAnalysis {
-    foodName: string;
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    portion: string;
-    confidence: number;
-}
+// Define strict schema for nutrition data
+const NutritionSchema = z.object({
+    foodName: z.string(),
+    calories: z.number().int().nonnegative(),
+    protein: z.number().nonnegative(),
+    carbs: z.number().nonnegative(),
+    fat: z.number().nonnegative(),
+    portion: z.string(),
+    confidence: z.number().min(0).max(1),
+});
+
+export type FoodAnalysis = z.infer<typeof NutritionSchema>;
 
 // Extended Window interface for Chrome Built-in AI
 declare global {
@@ -27,27 +31,27 @@ export async function analyzeFoodImage(imageBase64: string): Promise<FoodAnalysi
   Identify the food name, portion size, and estimate calories, protein (g), carbs (g), and fat (g).
   Return ONLY valid JSON in this format:
   {
-    "foodName": "string",
-    "portion": "string",
-    "calories": number,
-    "protein": number,
-    "carbs": number,
-    "fat": number,
-    "confidence": number
+    "foodName": "Food Name",
+    "portion": "e.g., 1 cup",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "confidence": 0.9
   }
   `;
 
     try {
         // Check key prerequisites for Local AI
         if (!window.ai || !window.ai.languageModel) {
-            console.warn("window.ai not found. Ensure Chrome flag 'Prompt API for Gemini Nano' is enabled.");
-            throw new Error("Local AI not supported");
+            console.warn("window.ai not found.");
+            return mockFallback();
         }
 
         const capabilities = await window.ai.languageModel.capabilities();
         if (capabilities.available === 'no') {
             console.warn("Gemini Nano model not downloaded.");
-            throw new Error("Model not available");
+            return mockFallback();
         }
 
         // Initialize Session
@@ -56,32 +60,37 @@ export async function analyzeFoodImage(imageBase64: string): Promise<FoodAnalysi
         });
 
         console.log("Local AI Session Created. Prompting...");
-
-        // NOTE: Pixel 10 (WebGPU/NPU) Multimodal Support
-        // We attempt to pass the image if the API structure allows (future spec),
-        // or rely on the text model if that's what's available. 
-        // This code assumes the model can handle the context.
         const result = await session.prompt("Analyze this food image: [Image Context Injected]");
-
         console.log("Raw Local AI Response:", result);
 
-        // Attempt to parse JSON from the response
+        // Attempt to parse and validate
         const cleanJson = result.replace(/```json/g, '').replace(/```/g, '').trim();
-        return JSON.parse(cleanJson);
+        const parsed = JSON.parse(cleanJson);
+
+        // Validate with Zod
+        const validated = NutritionSchema.safeParse(parsed);
+
+        if (validated.success) {
+            return validated.data;
+        } else {
+            console.error("AI Validation Error:", validated.error);
+            throw new Error("Invalid structure returned by AI");
+        }
 
     } catch (error) {
         console.error("Local AI Execution Failed:", error);
-
-        // Fallback for demonstration if local model fails/isn't present
-        // This ensures the app is testable even without the specific hardware right now
-        return {
-            foodName: "Local AI Error (Check Console)",
-            calories: 0,
-            protein: 0,
-            carbs: 0,
-            fat: 0,
-            portion: "Error",
-            confidence: 0
-        };
+        return mockFallback();
     }
+}
+
+function mockFallback(): FoodAnalysis {
+    return {
+        foodName: "Local AI Error (Check Console)",
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        portion: "Error",
+        confidence: 0
+    };
 }
