@@ -1,20 +1,19 @@
-
-// import { HealthConnect } from '@capacitor-community/health-connect';
 import { getUnsyncedLogs, markAsSynced } from './db';
 
-// MOCK STUB due to installation environment error (NPM 401/403)
+// MOCK STUB due to installation environment error
 // To enable real Health Connect, install '@capacitor-community/health-connect' and uncomment the import above.
+
+/* Unused stub for future use - kept for reference
 const HealthConnect = {
-    isAvailable: async () => false,
-    requestPermissions: async (opts: any) => ({}),
-    write: async (opts: any) => { },
+  isAvailable: async () => false,
+  requestPermissions: async (_opts: unknown) => ({}),
+  write: async (_opts: unknown) => {},
 };
+*/
 
 export async function initializeHealthConnect() {
     try {
         console.log("Health Connect Service Initialized (Stubbed due to NPM install error)");
-        // const isAvailable = await HealthConnect.isAvailable();
-        // if (isAvailable) { ... }
     } catch (e) {
         console.error("Health Connect Init Error:", e);
     }
@@ -28,8 +27,6 @@ export async function syncLogsToHealthConnect() {
 
         for (const log of unsynced) {
             console.log(`[Mock Sync] Uploading to Health Connect: ${log.foodName}`);
-            // Actual plugin interactions commented out for build safety
-            // await HealthConnect.write({ ... });
 
             // Mark as synced so UI updates
             await markAsSynced(log.id);
