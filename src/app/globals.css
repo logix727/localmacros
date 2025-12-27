@@ -1,0 +1,143 @@
+/* Expressive MD3 Theme - Vibrant Pixel Style */
+
+:root {
+  /* Primary - High Vibrancy Green */
+  --md-sys-color-primary: #3E6837;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #BEF0AF;
+  --md-sys-color-on-primary-container: #002200;
+
+  /* Secondary - Expressive Teal */
+  --md-sys-color-secondary: #006B5E;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #76F8E3;
+  --md-sys-color-on-secondary-container: #00201B;
+
+  /* Tertiary - Playful Orange */
+  --md-sys-color-tertiary: #8B5000;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FFDCBE;
+  --md-sys-color-on-tertiary-container: #2C1600;
+
+  /* Surfaces (Expressive Layering) */
+  --md-sys-color-background: #FDFCF5;
+  --md-sys-color-on-background: #1B1C18;
+  --md-sys-color-surface: #FDFCF5;
+  --md-sys-color-on-surface: #1B1C18;
+
+  --md-sys-color-surface-container-lowest: #FFFFFF;
+  --md-sys-color-surface-container-low: #F7F9F0;
+  --md-sys-color-surface-container: #F1F4EB;
+  --md-sys-color-surface-container-high: #EBEFE6;
+  --md-sys-color-surface-container-highest: #E5E9E0;
+
+  --md-sys-color-outline: #75796C;
+  --md-sys-color-outline-variant: #C5C8BA;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Expressive */
+    --md-sys-color-primary: #A3D594;
+    --md-sys-color-on-primary: #0F3807;
+    --md-sys-color-primary-container: #264F1D;
+    --md-sys-color-on-primary-container: #BEF0AF;
+
+    --md-sys-color-secondary: #56DBC6;
+    --md-sys-color-on-secondary: #003730;
+    --md-sys-color-secondary-container: #005047;
+    --md-sys-color-on-secondary-container: #76F8E3;
+
+    --md-sys-color-tertiary: #FFB870;
+    --md-sys-color-on-tertiary: #4A2800;
+    --md-sys-color-tertiary-container: #693C00;
+    --md-sys-color-on-tertiary-container: #FFDCBE;
+
+    --md-sys-color-background: #1B1C18;
+    --md-sys-color-on-background: #E3E3DC;
+
+    --md-sys-color-surface: #131410;
+    --md-sys-color-on-surface: #E3E3DC;
+
+    --md-sys-color-surface-container-lowest: #0E0F0B;
+    --md-sys-color-surface-container-low: #1B1C18;
+    --md-sys-color-surface-container: #1F201C;
+    --md-sys-color-surface-container-high: #292A26;
+    --md-sys-color-surface-container-highest: #343530;
+  }
+}
+
+@theme inline {
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-primary: var(--md-sys-color-on-primary);
+  --color-primary-container: var(--md-sys-color-primary-container);
+  --color-on-primary-container: var(--md-sys-color-on-primary-container);
+
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-on-secondary: var(--md-sys-color-on-secondary);
+  --color-secondary-container: var(--md-sys-color-secondary-container);
+  --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+
+  --color-background: var(--md-sys-color-background);
+  --color-on-background: var(--md-sys-color-on-background);
+
+  --color-surface: var(--md-sys-color-surface);
+  --color-on-surface: var(--md-sys-color-on-surface);
+
+  --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
+  --color-surface-container-low: var(--md-sys-color-surface-container-low);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-surface-container-high: var(--md-sys-color-surface-container-high);
+  --color-surface-container-highest: var(--md-sys-color-surface-container-highest);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  font-family: var(--font-geist-sans), sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base MD3 Utilities */
+.surface-1 {
+  background-color: color-mix(in srgb, var(--md-sys-color-primary) 5%, var(--md-sys-color-surface));
+}
+
+.surface-2 {
+  background-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, var(--md-sys-color-surface));
+}
+
+.surface-3 {
+  background-color: color-mix(in srgb, var(--md-sys-color-primary) 11%, var(--md-sys-color-surface));
+}
+
+.surface-4 {
+  background-color: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--md-sys-color-surface));
+}
+
+.surface-5 {
+  background-color: color-mix(in srgb, var(--md-sys-color-primary) 14%, var(--md-sys-color-surface));
+}
+
+.elevation-1 {
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.elevation-2 {
+  box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.elevation-3 {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
