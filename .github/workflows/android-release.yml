@@ -39,8 +39,8 @@ jobs:
       run: npx cap sync android
 
     - name: Build APK with Gradle
-      cd android
       run: ./gradlew assembleDebug
+      working-directory: ./android
 
     - name: Upload APK to Release
       uses: softprops/action-gh-release@v1
